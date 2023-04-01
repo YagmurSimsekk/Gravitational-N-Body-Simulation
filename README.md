@@ -10,64 +10,13 @@ Galaxy data is created with Galpy module https://docs.galpy.org/en/v1.8.1/index.
 
 
 ## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection. To use and modify this project, we would recommend to so these steps:
+Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection. 
 
-
-### Clone the Repository
-
-```
-git clone https://git.imp.fu-berlin.de/cs2022/project-1/Gravitational-N-Body.git
-git checkout main
-git status
-```
-
-
-
-<!-- I would recommend to install a new environment and setup all dependencies. So, you can read the following instruction:
-- Install virtual environment using:
-```
-pip install virtualenv
-```
-- Create a virtual environment  and activate it using:
-```
-virtualenv nbody
-source nbody/bin/activate
 ```
 - Install requirements from requirements.txt
 ```
 pip install -r requirements.txt -->
 <!-- ``` -->
-
-### Clone from GitLab
-Use this command line to add the project to your local system, either by url:
-```commandline
-git clone https://git.imp.fu-berlin.de/cs2022/project-1/Gravitational-N-Body.git
-```
-or by SSH Key:
-```commandline
-git clone git@git.imp.fu-berlin.de:cs2022/project-1/Gravitational-N-Body.git
-```
-
-Using SSH Key command requires creating an ssh key, which added to your GitLab account ([Stup SSH key](https://docs.gitlab.com/ee/ssh/)).
-SSH key make interacion with repository easier bacause you do not need to wite your username and password each time.
-
-
-### Setup Environment
-After cloning the repository, you need to setup an environment to install all needed packages and libraries. The steps of setting an environment are as follows:
-In this case, we call the environment "n-body"
-
--In Python
-
-1. `pip install virtualenv`
-2. `virtualenv n-body`
-3. `source n-body/bin/activate`
-4. `pip install -r requirements.txt`
-
--In conda:
-
-1. `conda create -n n-body`
-2. `conda activate n-body`
-3. `pip install -r requirements.txt`
 
 
 ### Install Project Using setup.py
@@ -102,7 +51,4 @@ cd GRAVITATIONAL-N-BODY
 pip install -r requirements.txt
 pytest 
 ```
-
-## References
-https://git.imp.fu-berlin.de/cs2022/project-1/Gravitational-N-Body/-/wikis/Useful-Links
 
