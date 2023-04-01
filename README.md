@@ -12,10 +12,10 @@ Galaxy data is created with Galpy module https://docs.galpy.org/en/v1.8.1/index.
 ## Installation
 Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection. 
 
-```
 - Install requirements from requirements.txt
 ```
-pip install -r requirements.txt -->
+pip install -r requirements.txt 
+```
 <!-- ``` -->
 
 
