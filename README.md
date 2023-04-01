@@ -34,7 +34,7 @@ over the time period
 ## Entity Relationship Diagram(ERD)
 The relationship between entities in this project are as follows:
 
-![Figure 1: Entities Relationship Diagram]("schema.jpg")
+![Figure 1: Entities Relationship Diagram](schema.jpg)
 
 In this figure, rectangles imply entities, such as simulation data, data ini-
 tializer, constants, integrator, system simulation, and data visualizer. Has been
