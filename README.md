@@ -139,7 +139,7 @@ We then sum the rows of the matrix to get the acceleration vector for each
 body in the x,y, and z directions. What we are left with is an array of shapes
 (N,3) which essentially represents:
 ```math
-{\forall i \in{[1,N]}: \{a_i=\sum_{j=1}^N-G\frac{r_{ij}m_j}{|r_{ij}|^3}}
+{\forall  i \in{[1,N]}: \a_i=\sum_{j=1}^N-G\frac{r_{ij}m_j}{|r_{ij}|^3}}
 ```
 
 ### Calculation of velocity and position
@@ -154,14 +154,14 @@ of ∆t we are using in our integration (e.g. we use a half-time step in frog le
 integration). This essentially represents:
 
 ```math
-$\forall$ $i$ \in$[1,N]$: \emph{$v_{i}=a_{i}x{\Delta$}{t}$}\
+{\forall  i \in{[1,N]}: \v_{i}=a_{i}x{\Delta}{t}}
 ```
 
 The position is similarly calculated by summing the velocity array multiplied
 by x∆t and the initial position array together:
 
 ```math
-$\forall$ $i$ \in$[1,N]$: \emph{$r_{i}=v_{i}x{$\Delta$}{t}$} 
+{\forall  i \in{[1,N]}: \{r_{i}=v_{i}x{\Delta}{t}} 
 ```
 ### Install Project Using setup.py
 
