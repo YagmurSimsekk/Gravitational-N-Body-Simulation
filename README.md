@@ -139,7 +139,7 @@ We then sum the rows of the matrix to get the acceleration vector for each
 body in the x,y, and z directions. What we are left with is an array of shapes
 (N,3) which essentially represents:
 ```math
-{\forall  i \in{[1,N]}: \a_i=\sum_{j=1}^N-G\frac{r_{ij}m_j}{|r_{ij}|^3}}
+{\forall  i \in{[1,N]}: a_i=\sum_{j=1}^N-G\frac{r_{ij}m_j}{|r_{ij}|^3}}
 ```
 
 ### Calculation of velocity and position
@@ -154,15 +154,76 @@ of ∆t we are using in our integration (e.g. we use a half-time step in frog le
 integration). This essentially represents:
 
 ```math
-{\forall  i \in{[1,N]}: \v_{i}=a_{i}x{\Delta}{t}}
+{\forall  i \in{[1,N]}: v_{i}=a_{i}x{\Delta}{t}}
 ```
 
 The position is similarly calculated by summing the velocity array multiplied
 by x∆t and the initial position array together:
 
 ```math
-{\forall  i \in{[1,N]}: \{r_{i}=v_{i}x{\Delta}{t}} 
+{\forall  i \in{[1,N]}: \r_{i}=v_{i}x{\Delta}{t}} 
 ```
+
+### Calculation of the system’s mechanical energy
+The calculation of the system energy gives us a good idea of what is going on
+with our simulation as it should stay constant in an isolated system of bodies.
+A system of bodies possesses only two mechanical energies:
+1. Gravitational potential energy
+2. Kinetic energy
+
+For the calculation of the potential we first form two matrices of dimensions
+(N,N), one of which we populate row-wise with the mass of each body and the
+second one which we populate column-wise with the mass of each body. By
+multiplying these two matrices together we get the mimj term in form of an
+array of shapes (N, N). We then further divide this matrix with the matrix con-
+taining absolute distances. We here again face division by zero on the diagonal,
+to which we assign the value of 0. In the next step, we sum all the elements
+of the matrix together and multiply it with -G which is in turn the potential
+energy of the entire system.
+
+For the calculation of the kinetic energy we basically take the squared velocities
+matrix and multiply it with the masses matrix, which returns an array of the
+shape (N,3). By making the sum of all the elements and multiplying the result
+by factor 0.5 we get the total kinetic energy of the system.
+With the sum of these two constants we receive the total mechanical energy of
+the system.
+
+## Simulation
+The data obtained from the Data Source acts as the initial data for the system.
+Using the initial data, the defined number of iterations as time steps, and the
+step difference dt, the simulation of the system is performed. Once stimulated,
+the output data is saved as a Numpy data file. This saved file is then fed into
+the Visualisation system, to depict the simulated data.
+In the project SystemSimulator is the class for the simulation logic. Once
+instantiated with the Integrator, it is called from the main.py. It reads the
+simulation duration and time step from constants and calls the Integrator’s
+step method to find out the new positions and momenta of bodies at each time
+step.
+
+## Results
+
+### 3-Body
+In this section, the momentum of 3-body, the center of mass, and the total
+energy have been shown.
+
+![Figure 3](3body.png)
+
+![Figure 4](3bodygraph.png)
+
+### Solar System - NASA Horizons data
+In this section, the momentum of Solar System, the center of mass, and the
+total energy have been shown.
+
+![Figure 5](_nasa_dataset.png)
+
+### Modelled Galaxy - using Galpy
+In this section, the momentum of a scientifically modeled Galaxy, the center of
+mass, and the total energy have been shown.
+
+
+We used the Galpy library for modeling a Galaxy, which has a list of potential functions available. 
+The Milky Way Galaxy resembling Potential is available in the form of MWPotential2014.
+Using the MWPotential2014 and a random generated positions, a starting initial data for a disc/spherical/bulge Galaxy like system can be created, which is then fed into our simulator.
 ### Install Project Using setup.py
 
 The strucure of the project shown in following:
