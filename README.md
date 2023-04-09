@@ -266,14 +266,8 @@ There exist different kinds of Verlet algorithms. We are here concerning mainly 
 
 ```math
 {\textbf{v}_{ n + \frac{1}{2}} = \textbf{v}_{n} + \frac{1}{2} \textbf{a}_{n} \Delta t}
-```
-
-```math
-{\textbf{x}_{n+1} = \textbf{x}_{n} + \textbf{v}_{n + \frac{1}{2}} \Delta t \}
-```
-
-```math
-{\textbf{v}_{n+1} = \textbf{v}_{n + \frac{1}{2}} + \frac{1}{2} \textbf{a}_{n+1} \Delta t \}
+{\textbf{x}_{n+1} = \textbf{x}_{n} + \textbf{v}_{n + \frac{1}{2}} \Delta t }
+{\textbf{v}_{n+1} = \textbf{v}_{n + \frac{1}{2}} + \frac{1}{2} \textbf{a}_{n+1} \Delta t }
 ```
 
 ### Particle-Particle Particle-Mesh (P3M)
@@ -287,7 +281,7 @@ of two component parts: the short-range part f sr which is non-zero only for
 particle separations less than some cutoff radius re and the smoothly varying
 part R which has a transform which is approximately band limited, meaning it
 is approximately non-zero for only a limited range of k. The total short-range
-force on a particle \textbf{F}\textsuperscript{sr} is computed by direct particle-particle (PP) pair force
+force on a particle F^sr is computed by direct particle-particle (PP) pair force
 summation and the smoothly varying part is approximated by the particle-
 mesh (PM) force calculation. Two meshes are employed in P3M algorithms:
 the charge potential-mesh and a chaining mesh, which is a coarser mesh. The
@@ -300,7 +294,7 @@ force (Hockney, Roger, 1988).
 Tree methods organize particles into a hierarchy of clusters, which decomposes
 the force into the following:
 f = external neighbour force + nearest neighbor force + far-field force
-However, the far-field force calculation can rise up to a cost of O(n2). Barnes
+However, the far-field force calculation can rise up to a cost of O(n^2). Barnes
 Hut Tree Algorithm solves this issue by calculating the far-field force using
 Divide-and-Conquer, namely:
 (1) Build a quadtree
