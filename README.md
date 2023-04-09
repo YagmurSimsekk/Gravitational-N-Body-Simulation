@@ -57,7 +57,7 @@ The initial data creation is governed by the DataInitializer class. For N-body
 (2-body, 3-body systems)random data is generated.
 
 ## NASA Horizons Data
-Using the data of NASA[https://ssd.jpl.nasa.gov/horizons/] 1 enables us to simulate the integration between planets
+Using the data of [NASA Horizons data](https://ssd.jpl.nasa.gov/horizons/) 1 enables us to simulate the integration between planets
 in our galaxy. A total of 30 bodies consisting of the Sun, 8 planets of the Solar
 System, Pluto, and their biggest moons are extracted from by using astroquery
 library. The information regarding positions and velocities are obtained using
