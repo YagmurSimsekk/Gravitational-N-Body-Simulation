@@ -207,23 +207,27 @@ In this section, the momentum of 3-body, the center of mass, and the total
 energy have been shown.
 
 ![Figure 3](3body.png)
-
-![Figure 4](3bodygraph.png)
-
+![_3_body_dataset](https://user-images.githubusercontent.com/55834139/230798894-bc5fa32a-e101-4c32-a79c-80ea937e010b.png)
 
 
 ### Solar System - NASA Horizons data
 In this section, the momentum of Solar System, the center of mass, and the
 total energy have been shown.
 
-![Figure 5](_nasa_dataset.png)
+
+https://user-images.githubusercontent.com/55834139/230798929-cb32667d-6b72-4dcf-b1bb-a6c2bf72fc92.mp4
+
+<img width="738" alt="_nasa_dataset" src="https://user-images.githubusercontent.com/55834139/230798950-c2c2270c-0fca-4cc4-a20b-6817c09b4db5.png">
+
 
 ### Modelled Galaxy - using Galpy
 In this section, the momentum of a scientifically modeled Galaxy, the center of
-mass, and the total energy have been shown.
+mass, and the total energy have been shown.![galpy](https://user-images.githubusercontent.com/55834139/230799020-f071b325-e7b5-488d-a0e9-e9cb98da978f.png)
+
+<img width="689" alt="_MW_disc_dataset_ver0 2" src="https://user-images.githubusercontent.com/55834139/230799056-c25dc1db-8b73-4bd3-a530-0968b59177c0.png">
 
 
-We used the Galpy library for modeling a Galaxy, which has a list of potential functions available. 
+Galpy library is used for modeling a Galaxy, which has a list of potential functions available. 
 The Milky Way Galaxy resembling Potential is available in the form of MWPotential2014.
 Using the MWPotential2014 and a random generated positions, a starting initial data for a disc/spherical/bulge Galaxy like system can be created, which is then fed into our simulator.
 ### Install Project Using setup.py
