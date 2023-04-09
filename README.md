@@ -216,6 +216,13 @@ energy have been shown.
 In this section, the momentum of Solar System, the center of mass, and the
 total energy have been shown.
 
+We used the NASA Horizons API service to get data for Solar System bodies.
+
+A total of 30 bodies consisting of the Sun, 8 planets of the Solar System, Pluto, and their biggest moons are extracted from by using Astroquery library which can send API request for multiple bodies. 
+The initial position and velocity vectors were taken from 2017-01-01 and the time step is given as 1 day.
+Mass and size (diameter) information are extracted by sending API request directly to NASA Horizons API services.
+
+
 
 
 ### Modelled Galaxy - using Galpy
@@ -253,6 +260,79 @@ commonly discussed methods, where force is approximated instead of being ex-
 actly calculated: Particle-Particle-Particle-Mesh (P3M), which tries to recover
 accuracy lost in the Particle Mesh method while keeping the time complexity
 O(NlogN).
+
+### Velocity Verlet
+There exist different kinds of Verlet algorithms. We are here concerning mainly the Position Verlet algorithm. We do the following iteratively:
+
+```math
+{\textbf{v}_{ n + \frac{1}{2}} = \textbf{v}_{n} + \frac{1}{2} \textbf{a}_{n} \Delta t}
+```
+
+```math
+{\textbf{x}_{n+1} = \textbf{x}_{n} + \textbf{v}_{n + \frac{1}{2}} \Delta t \}
+```
+
+```math
+{\textbf{v}_{n+1} = \textbf{v}_{n + \frac{1}{2}} + \frac{1}{2} \textbf{a}_{n+1} \Delta t \}
+```
+
+### Particle-Particle Particle-Mesh (P3M)
+Particle-Particle-Particle Mesh is a Fourier-based alternative approach to the
+Ewald summation method (Toukmaji et al., 1996). The aim is to calculate
+potentials in N-body simulations. It is based on the particle mesh method,
+where particles are interpolated onto a grid and the potential is solved for this
+grid.
+The essence of the method is to express the interparticle force as the sum
+of two component parts: the short-range part f sr which is non-zero only for
+particle separations less than some cutoff radius re and the smoothly varying
+part R which has a transform which is approximately band limited, meaning it
+is approximately non-zero for only a limited range of k. The total short-range
+force on a particle \textbf{F}\textsuperscript{sr} is computed by direct particle-particle (PP) pair force
+summation and the smoothly varying part is approximated by the particle-
+mesh (PM) force calculation. Two meshes are employed in P3M algorithms:
+the charge potential-mesh and a chaining mesh, which is a coarser mesh. The
+charge potential mesh is used at different stages of the Particle Mesh calculation
+to store, in turn, charge density values, charge harmonics, potential harmonics, and potential values. The chaining mesh is a regular array of cells whose sides
+have lengths greater than or equal to the cutoff radius re of the short-range
+force (Hockney, Roger, 1988).
+
+### Barnes Hut Tree Algorithm
+Tree methods organize particles into a hierarchy of clusters, which decomposes
+the force into the following:
+f = external neighbour force + nearest neighbor force + far-field force
+However, the far-field force calculation can rise up to a cost of O(n2). Barnes
+Hut Tree Algorithm solves this issue by calculating the far-field force using
+Divide-and-Conquer, namely:
+(1) Build a quadtree
+(2) For each subsquare in the quadtree, compute the center of mass and total
+mass for all the particles it contains
+(3) For each particle, traverse the tree to compute the force on it.
+With this approach, the time complexity can be reduced to O(NlogN).
+
+## Parallelization
+
+Parallelization options that could have been used.
+
+### Parallelize the Particle-Particle Method
+As the previous section introduced, force calculation in the Particle-Particle
+method is expensive, so the force should be computed in parallel. Let us take
+our implemented algorithm for example. The following method is introduced:
+The master core holds the information of the current step, i.e. position and
+velocity vectors. The force is computed in parallel by storing the partitioned
+initial number of N bodies in slave cores, which is responsible for calculating
+the force exerted on the bodies it contained. The mater core can then collect
+all the new updated acceleration values and use, e.g. the algorithm in section
+above, to obtain positions and velocities for the next time step.
+
+### Parallelize the Barnes Hut Tree Algorithm
+Since force calculations are independent in a tree traversal, we can also try
+to parallelize these calculations in a tree method. One of the intuitions for
+Parallelizing the Barnes Hut Tree Algorithm is to partition its quadtree, and
+assign them to a different processor, while making sure that each partition has
+about N/num of processors bodies. Each processor also stores adjoining parts
+of quadtree for computing forces of bodies that is stored. With a subset of the
+tree required by each processor, force calculations in step of section above
+can then be done in parallel without communicating among processors.
 
 ### Install Project Using setup.py
 
