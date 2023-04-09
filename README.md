@@ -118,7 +118,7 @@ In the next step we calculate:
 ```math
 {-G\frac{r_{ij}}{|r_{ij}|^3}}
 ```
-$${-G\frac{r_{ij}}{|r_{ij}|^3}
+
 
 We then sum the rows of the matrix to get the acceleration vector for each body in the x,y, and z directions. 
 What we are left with is an array of shapes (N,3) which essentially represents:   
@@ -130,9 +130,38 @@ given matrix with a masses matrix that populates each column of the matrix
 with a mass of each body. In order to do that we have to expand the masses
 array of shapes (N) to an array of shapes (N,N,3).
 
-We now have calculated: $$-G\frac{r_{ij}m_{j}}{|r_{ij}|^3
+We now have calculated:
+```math
+ {-G\frac{r_{ij}m_{j}}{|r_{ij}|^3}
+```
+We then sum the rows of the matrix to get the acceleration vector for each
+body in the x,y, and z directions. What we are left with is an array of shapes
+(N,3) which essentially represents:
+```math
+$\forall$ $i$ \in{$[1,N]$}: \emph{$a_i=\sum_{j=1}^N-G\frac{r_{ij}m_j}{|r_{ij}|^3}$}
+```
 
+### Calculation of velocity and position
+With the calculated acceleration for each body, we can then calculate the veloc-
+ity and final position of the body at the next time step. Besides the calculated
+acceleration, the entry data for this calculation step is a matrix of initial veloc-
+ity (i.e velocity at the beginning of the integration step) and initial position (i.e
+position at the beginning of the integration step), both of these being arrays of
+the shape (N,3). The velocity is calculated by summing the acceleration array
+multiplied by x∆t and the initial velocity array together, where x is the fraction
+of ∆t we are using in our integration (e.g. we use a half-time step in frog leap
+integration). This essentially represents:
 
+```math
+$\forall$ $i$ \in$[1,N]$: \emph{$v_{i}=a_{i}x{\Delta$}{t}$}\
+```
+
+The position is similarly calculated by summing the velocity array multiplied
+by x∆t and the initial position array together:
+
+```math
+$\forall$ $i$ \in$[1,N]$: \emph{$r_{i}=v_{i}x{$\Delta$}{t}$} 
+```
 ### Install Project Using setup.py
 
 The strucure of the project shown in following:
