@@ -131,14 +131,15 @@ with a mass of each body. In order to do that we have to expand the masses
 array of shapes (N) to an array of shapes (N,N,3).
 
 We now have calculated:
+
 ```math
-{-G\frac{r_{ij}m_{j}}{|r_{ij}|^3}
+{-G\frac{r_{ij}m_{j}}{|r_{ij}|^3}}
 ```
 We then sum the rows of the matrix to get the acceleration vector for each
 body in the x,y, and z directions. What we are left with is an array of shapes
 (N,3) which essentially represents:
 ```math
-{forall i \in{[1,N]}: \{a_i=\sum_{j=1}^N-G\frac{r_{ij}m_j}{|r_{ij}|^3}}
+{\forall i \in{[1,N]}: \{a_i=\sum_{j=1}^N-G\frac{r_{ij}m_j}{|r_{ij}|^3}}
 ```
 
 ### Calculation of velocity and position
