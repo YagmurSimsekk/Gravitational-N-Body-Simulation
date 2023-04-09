@@ -22,6 +22,8 @@ Galaxy data is created with Galpy module https://docs.galpy.org/en/v1.8.1/index.
 The aim of this project was to create an N-body simulator which when fed with
 appropriate data of bodies, simulates the system for velocity and positions of
 bodies for a given time period.
+
+![Figure 1: Approach Diagram](approach.png)
 The approach for the implementation was as follows:
 1. Model Initial starting Data for the system.
 2. Using the above data, simulate the system for the time being. The simulator
@@ -35,7 +37,7 @@ over the time period
 The relationship between entities in this project are as follows:
 
 
-![Figure 1: Entities Relationship Diagram](schema.png)
+![Figure 2: Entities Relationship Diagram](schema.png)
 
 In this figure, rectangles imply entities, such as simulation data, data ini-
 tializer, constants, integrator, system simulation, and data visualizer. Has been
@@ -53,6 +55,82 @@ in the system is modeled as SimulationData object. At every time step, the
 updated positions for all bodies are saved as objects of SimulationData.
 The initial data creation is governed by the DataInitializer class. For N-body
 (2-body, 3-body systems)random data is generated.
+
+## NASA Horizons Data
+Using the data of NASA[https://ssd.jpl.nasa.gov/horizons/] 1 enables us to simulate the integration between planets
+in our galaxy. A total of 30 bodies consisting of the Sun, 8 planets of the Solar
+System, Pluto, and their biggest moons are extracted from by using astroquery
+library. The information regarding positions and velocities are obtained using
+HorizonClass and other relative information, for example, name, mass, size are
+extracted directly from NASA website. All of this information can be extracted
+as a data frame using nasa data.
+
+### Modelled Data for Galaxy
+The data for modeling a Galaxy is initialized using the Galpy library, which
+has a list of potential functions available. The Milky Way Galaxy resembling
+Potential is available in the form of MWPotential2014.
+
+1. The getModelData() method in the DataInitializer takes care of generat-
+ing modelled scientific Data.
+2. Initial positions of N-bodies are initialized using a Gaussian distribution.
+3. An object of MWPotential2014 potential is created. There is an option
+to add an additional black hole, dynamic friction. For our implementation, we
+go with basic MWPotential2014 potential.
+4. Using MWPotential2014[1] potential function (1-disc shaped), evaluate method
+is called using position, to get the momentum, and in turn velocities of each
+body. The results are initialized as an object of SimulationData to be fed into
+the system.
+
+## Integration
+The integration part of an N-body simulation is mainly comprised of 3 major
+steps:
+1. calculation of gravitational forces between the bodies and thus the accel-
+eration for each of the bodies
+2. calculation of velocity for each body
+3. calculation of position
+Depending on the combination of these 3 general calculation steps and depend-
+ing on the fraction of the time step we use for each calculation we were able to
+achieve the different integration methods.
+
+### Numerical Method
+The integration is similarly dependent on three parameters:
+1. The position of the body (relative to the other bodies in the system)
+2. The mass of the body
+3. The velocity of the body
+Our entry data for each integration step is thus always comprised of 3 arrays
+containing these parameters. For the purpose of speeding up the calculation, we
+vectorized our problem and by doing so we evaded calculating the gravitational
+forces for each body individually (with a double ”for loop” which slows down
+the calculation drastically) and rather use matrix operations instead. All the
+calculation steps were written as an integrator class function.
+
+### Calculation of acceleration
+The calculation of acceleration begins with filling out a matrix with the positions
+array in such a way that it returns a 3D array in the shape of (N, N,3) (with the
+3rd dimension being the position vector of the body in x,y and z directions).
+Each row of this matrix is essentially entirely populated with the position vector
+of the same body. In the next step, we switch the rows and columns so that
+each column is entirely populated by the same position vector. By subtracting
+these two matrices we get the directional vectors from the body to body. From
+this matrix, we are able to calculate a matrix of absolute distances in the form
+of an array in the shape of (N, N).
+In the next step we calculate: 
+```math
+{-G\frac{r_{ij}}{|r_{ij}|^3}}
+```
+$${-G\frac{r_{ij}}{|r_{ij}|^3}
+
+We then sum the rows of the matrix to get the acceleration vector for each body in the x,y, and z directions. 
+What we are left with is an array of shapes (N,3) which essentially represents:   
+
+Since we have division by 0 along the matrix diagonal which in turn returns
+a calculation error (because the vector rii = [0, 0, 0]) we once again assign 0
+across the diagonal with the following two lines of code. We then multiply the
+given matrix with a masses matrix that populates each column of the matrix
+with a mass of each body. In order to do that we have to expand the masses
+array of shapes (N) to an array of shapes (N,N,3).
+
+We now have calculated: $$-G\frac{r_{ij}m_{j}}{|r_{ij}|^3
 
 
 ### Install Project Using setup.py
