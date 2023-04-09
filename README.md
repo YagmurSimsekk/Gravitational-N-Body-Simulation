@@ -207,7 +207,9 @@ In this section, the momentum of 3-body, the center of mass, and the total
 energy have been shown.
 
 ![Figure 3](3body.png)
-![_3_body_dataset](https://user-images.githubusercontent.com/55834139/230798894-bc5fa32a-e101-4c32-a79c-80ea937e010b.png)
+
+![Figure 4](3bodygraph.png)
+
 
 
 ### Solar System - NASA Horizons data
@@ -215,21 +217,43 @@ In this section, the momentum of Solar System, the center of mass, and the
 total energy have been shown.
 
 
-https://user-images.githubusercontent.com/55834139/230798929-cb32667d-6b72-4dcf-b1bb-a6c2bf72fc92.mp4
-
-<img width="738" alt="_nasa_dataset" src="https://user-images.githubusercontent.com/55834139/230798950-c2c2270c-0fca-4cc4-a20b-6817c09b4db5.png">
-
 
 ### Modelled Galaxy - using Galpy
 In this section, the momentum of a scientifically modeled Galaxy, the center of
-mass, and the total energy have been shown.![galpy](https://user-images.githubusercontent.com/55834139/230799020-f071b325-e7b5-488d-a0e9-e9cb98da978f.png)
-
-<img width="689" alt="_MW_disc_dataset_ver0 2" src="https://user-images.githubusercontent.com/55834139/230799056-c25dc1db-8b73-4bd3-a530-0968b59177c0.png">
+mass, and the total energy have been shown.
 
 
-Galpy library is used for modeling a Galaxy, which has a list of potential functions available. 
+We used the Galpy library for modeling a Galaxy, which has a list of potential functions available. 
 The Milky Way Galaxy resembling Potential is available in the form of MWPotential2014.
 Using the MWPotential2014 and a random generated positions, a starting initial data for a disc/spherical/bulge Galaxy like system can be created, which is then fed into our simulator.
+
+## Algorithmic Complexity
+In this project, the position verlet is implemented, whose algorithm is described above.
+The bottleneck of speeding up the program as a whole would lie in
+acceleration calculation, where an O(N2) matrix elements need to be calculated.
+So in the rest of this section, we will first introduce Velocity Verlet followed by a
+quick review of two algorithms for N-body simulations, that has improved time
+complexity.
+
+### Overview of Well-Known Algorithms
+The simplest is the Particle-Particle method. The advantage of this algorithm
+is its simplicity, which allows vectorization to be used, as in this project. 
+Parallelization would be also reasonably straightforward to be implemented. How-
+ever, the disadvantage reveals itself fully when N is greater than 1000, since
+bodies interact directly with each other, the cost of force calculation is O(N2).
+The last time expensive would be the Fast Multipole Method, whose time
+complexity is O(n). However, since it uses sophisticated mathematical equa-
+tions, it becomes difficult to program in three dimensions. In addition, it has
+larger constants in its order of complexity.
+
+So, in the rest of this section, we will start with the symplectic integra-
+tor, Velocity Verlet, which is close relative to the one we implemented in the
+Verlet integration family used in this project. Then, we will present two most
+commonly discussed methods, where force is approximated instead of being ex-
+actly calculated: Particle-Particle-Particle-Mesh (P3M), which tries to recover
+accuracy lost in the Particle Mesh method while keeping the time complexity
+O(NlogN).
+
 ### Install Project Using setup.py
 
 The strucure of the project shown in following:
