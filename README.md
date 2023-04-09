@@ -161,7 +161,7 @@ The position is similarly calculated by summing the velocity array multiplied
 by x∆t and the initial position array together:
 
 ```math
-{\forall  i \in{[1,N]}: \r_{i}=v_{i}x{\Delta}{t}} 
+{\forall  i \in{[1,N]}: r_{i}=v_{i}x{\Delta}{t}} 
 ```
 
 ### Calculation of the system’s mechanical energy
@@ -209,6 +209,8 @@ energy have been shown.
 ![Figure 3](3body.png)
 
 ![Figure 4](3bodygraph.png)
+
+
 
 ### Solar System - NASA Horizons data
 In this section, the momentum of Solar System, the center of mass, and the
