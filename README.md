@@ -266,7 +266,11 @@ There exist different kinds of Verlet algorithms. We are here concerning mainly 
 
 ```math
 {\textbf{v}_{ n + \frac{1}{2}} = \textbf{v}_{n} + \frac{1}{2} \textbf{a}_{n} \Delta t}
+```
+```math
 {\textbf{x}_{n+1} = \textbf{x}_{n} + \textbf{v}_{n + \frac{1}{2}} \Delta t }
+```
+```math
 {\textbf{v}_{n+1} = \textbf{v}_{n + \frac{1}{2}} + \frac{1}{2} \textbf{a}_{n+1} \Delta t }
 ```
 
