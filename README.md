@@ -6,8 +6,7 @@ The N-body problem, in physics, describes as the problem of predicting the
 individual motions of a group of celestial objects interacting with each other
 due to the gravitational force. The desire to understand the motions of the
 Sun, Moon, planets and visible stars is the motivation for solving this problem.
-In the recent century, understanding the dynamics of globular cluster star sys-
-tems became an important N-body problem. The n-body problem in general
+In the recent century, understanding the dynamics of globular cluster star systems became an important N-body problem. The n-body problem in general
 relativity is considerably more difficult to solve.
 
 ## Description
@@ -39,8 +38,7 @@ The relationship between entities in this project are as follows:
 
 ![Figure 2: Entities Relationship Diagram](schema.png)
 
-In this figure, rectangles imply entities, such as simulation data, data ini-
-tializer, constants, integrator, system simulation, and data visualizer. Has been
+In this figure, rectangles imply entities, such as simulation data, data initializer, constants, integrator, system simulation, and data visualizer. Has been
 shown by rhomboid, the relation between entities. For instance, constants have
 a ”use” relation with the data initializer, system simulation, and integrator.
 Each entity has some attributes which are shown by circles. Give Simulation
@@ -63,15 +61,14 @@ System, Pluto, and their biggest moons are extracted from by using astroquery
 library. The information regarding positions and velocities are obtained using
 HorizonClass and other relative information, for example, name, mass, size are
 extracted directly from NASA website. All of this information can be extracted
-as a data frame using nasa data.
+as a data frame using NasaData.
 
 ### Modelled Data for Galaxy
 The data for modeling a Galaxy is initialized using the Galpy library, which
 has a list of potential functions available. The Milky Way Galaxy resembling
 Potential is available in the form of MWPotential2014.
 
-1. The getModelData() method in the DataInitializer takes care of generat-
-ing modelled scientific Data.
+1. The getModelData() method in the DataInitializer takes care of generating modelled scientific Data.
 2. Initial positions of N-bodies are initialized using a Gaussian distribution.
 3. An object of MWPotential2014 potential is created. There is an option
 to add an additional black hole, dynamic friction. For our implementation, we
@@ -84,10 +81,10 @@ the system.
 ## Integration
 The integration part of an N-body simulation is mainly comprised of 3 major
 steps:
-1. calculation of gravitational forces between the bodies and thus the accel-
+1. Calculation of gravitational forces between the bodies and thus the accel-
 eration for each of the bodies
-2. calculation of velocity for each body
-3. calculation of position
+2. Calculation of velocity for each body
+3. Calculation of position
 Depending on the combination of these 3 general calculation steps and depend-
 ing on the fraction of the time step we use for each calculation we were able to
 achieve the different integration methods.
@@ -118,10 +115,6 @@ In the next step we calculate:
 ```math
 {-G\frac{r_{ij}}{|r_{ij}|^3}}
 ```
-
-
-We then sum the rows of the matrix to get the acceleration vector for each body in the x,y, and z directions. 
-What we are left with is an array of shapes (N,3) which essentially represents:   
 
 Since we have division by 0 along the matrix diagonal which in turn returns
 a calculation error (because the vector rii = [0, 0, 0]) we once again assign 0
@@ -188,6 +181,15 @@ by factor 0.5 we get the total kinetic energy of the system.
 With the sum of these two constants we receive the total mechanical energy of
 the system.
 
+## Integrator structure
+In this simulation, leapfrog integration method and the
+Verlet integration method are utilized. The method is characterized by using a half-time
+step for either the calculation of velocity or the calculation of position. Calculation of position is prioritized. Structured integration step as follows:
+1. Calculation of Rt+0.5∆t with Vt (we use 0.5∆t)
+2. Calculation of Vt+∆t with A(t) calculated at Rt+0.5∆t (we use ∆t)
+3. Calculation of Rt+1.5∆t with Vt+∆t (we use 0.5∆t)
+4. Calculation of Vt+2∆t with A(t+∆t) calculated at Rt+1.5∆t (we use ∆t)
+
 ## Simulation
 The data obtained from the Data Source acts as the initial data for the system.
 Using the initial data, the defined number of iterations as time steps, and the
@@ -218,17 +220,19 @@ total energy have been shown.
 
 We used the NASA Horizons API service to get data for Solar System bodies.
 
+https://user-images.githubusercontent.com/55834139/233346905-fd68f4ea-a46c-473c-b715-0ff5c641a057.mp4
+<img width="738" alt="_nasa_dataset" src="https://user-images.githubusercontent.com/55834139/233347078-b73b0810-f3f4-47b5-8cbd-14fc67cc441a.png">
+
+
 A total of 30 bodies consisting of the Sun, 8 planets of the Solar System, Pluto, and their biggest moons are extracted from by using Astroquery library which can send API request for multiple bodies. 
 The initial position and velocity vectors were taken from 2017-01-01 and the time step is given as 1 day.
 Mass and size (diameter) information are extracted by sending API request directly to NASA Horizons API services.
 
 
-
-
 ### Modelled Galaxy - using Galpy
 In this section, the momentum of a scientifically modeled Galaxy, the center of
 mass, and the total energy have been shown.
-
+<img width="689" alt="_MW_disc_dataset_ver" src="https://user-images.githubusercontent.com/55834139/233347336-0dbe1b8f-f0ff-4fcd-a97e-32ef2e93da31.png">
 
 We used the Galpy library for modeling a Galaxy, which has a list of potential functions available. 
 The Milky Way Galaxy resembling Potential is available in the form of MWPotential2014.
@@ -308,8 +312,6 @@ mass for all the particles it contains
 With this approach, the time complexity can be reduced to O(NlogN).
 
 ## Parallelization
-
-Parallelization options that could have been used.
 
 ### Parallelize the Particle-Particle Method
 As the previous section introduced, force calculation in the Particle-Particle
