@@ -367,6 +367,7 @@ pip install -r requirements.txt
 pytest 
 ```
 
-Contributions: Deniz Naz A., Ishita S., Mark G., Neda R., Fatemeh T., Xiaofan X.
+Contributions: Deniz Naz A., Ishita S., Mark G., Neda R., Fatemeh T., Xiaofan X., Yagmur S.
 Department of Mathematics, Freie Universit at Berlin
 February 2023
+
